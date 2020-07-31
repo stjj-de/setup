@@ -41,7 +41,7 @@ services:
     restart: always
 
     ports:
-      "4000:3306"
+      - "4000:3306"
 
     environment:
       MYSQL_DATABASE: stjj-de
