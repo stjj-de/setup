@@ -12,8 +12,8 @@ services:
     environment:
       SSR_BACKEND_HOST: "backend:8000"
 
-  depends_on:
-    - backend
+    depends_on:
+      - backend
 
   backend:
     image: "docker.pkg.github.com/stjj-de/backend/backend:latest"
@@ -34,6 +34,9 @@ services:
 
     volumes:
       - ./data:/app/data
+
+    depends_on:
+      - mariadb
 
   mariadb:
     image: "mariadb:latest"
