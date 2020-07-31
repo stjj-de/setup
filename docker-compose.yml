@@ -6,7 +6,7 @@ services:
     restart: always
 
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
 
     environment:
       SSR_BACKEND_HOST: "backend:8000"
@@ -19,7 +19,7 @@ services:
     restart: always
 
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
 
     environment:
       MARIADB_HOST: mariadb
@@ -41,7 +41,7 @@ services:
     restart: always
 
     ports:
-      - "4000:3306"
+      - "127.0.0.1:3306:3306"
 
     environment:
       MYSQL_DATABASE: stjj-de
