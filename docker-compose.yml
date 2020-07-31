@@ -23,6 +23,12 @@ services:
     ports:
       - "8000:8000"
 
+    environment:
+      MARIADB_HOST: mariadb
+      MARIADB_PORT: 3306
+      MARIADB_USER: backend
+      MARIADB_DATABASE: stjj-de
+
     env_file:
       - "./backend.env"
 
@@ -33,6 +39,10 @@ services:
     image: "mariadb:latest"
     restart_policy:
       condition: any
+
+    environment:
+      MYSQL_DATABASE: stjj-de
+      MYSQL_USER: backend
 
     env_file:
       - "./mariadb.env"
