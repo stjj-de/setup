@@ -40,6 +40,9 @@ services:
     image: "mariadb:latest"
     restart: always
 
+    ports:
+      "4000:3306"
+
     environment:
       MYSQL_DATABASE: stjj-de
       MYSQL_USER: backend
