@@ -53,3 +53,25 @@ services:
 
     volumes:
       - "./data/db:/var/lib/mysql"
+      
+  ackee:
+    image: electerious/ackee
+    restart: always
+    ports:
+      - "127.0.0.1:4000:3000"
+      
+    environment:
+      - WAIT_HOSTS=mongo:27017
+      - ACKEE_MONGODB=mongodb://mongo:27017/ackee
+      
+    env_file:
+      - "./ackee.env"
+      
+    depends_on:
+      - mongo
+      
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - ./data/analytics:/data/db
