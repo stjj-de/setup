@@ -7,11 +7,11 @@ sed -i -r 's/(listen .*443)/\1;#/g; s/(ssl_(certificate|certificate_key|trusted_
 sudo nginx -t && sudo systemctl reload nginx
 
 # Generate certificates
-certbot certonly --webroot -d stjj.moritzruth.de --email webmaster@moritzruth.de -w /var/www/_letsencrypt -n --agree-tos --force-renewal
-certbot certonly --webroot -d analytics.stjj.moritzruth.de --email webmaster@moritzruth.de -w /var/www/_letsencrypt -n --agree-tos --force-renewal
+certbot certonly --webroot -d new.stjj.de --email webmaster@moritzruth.de -w /var/www/_letsencrypt -n --agree-tos --force-renewal
+certbot certonly --webroot -d analytics.stjj.de --email webmaster@moritzruth.de -w /var/www/_letsencrypt -n --agree-tos --force-renewal
 
 # Uncomment TLS related lines
-sed -i -r 's/#?;#//g' /etc/nginx/sites-available/stjj.moritzruth.de.conf /etc/nginx/sites-available/analytics.stjj.moritzruth.de.conf
+sed -i -r 's/#?;#//g' /etc/nginx/sites-available/new.stjj.de.conf /etc/nginx/sites-available/analytics.stjj.de.conf
 
 # Reload again
 sudo nginx -t && sudo systemctl reload nginx
