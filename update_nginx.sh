@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cp -r ./nginx /etc
+sudo cp -r ./nginx /etc
 sudo nginx -t && sudo systemctl reload nginx
