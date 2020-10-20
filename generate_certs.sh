@@ -7,7 +7,7 @@ sudo sed -i -r 's/(listen .*443)/\1;#/g; s/(ssl_(certificate|certificate_key|tru
 sudo nginx -t && sudo service nginx reload
 
 # Generate certificates
-sudo certbot certonly --webroot -d new.stjj.de --email webmaster@moritzruth.de -w /var/www/_letsencrypt -n --agree-tos --force-renewal
+sudo certbot certonly --webroot -d stjj.de -d www.stjj.de --email webmaster@moritzruth.de -w /var/www/_letsencrypt -n --agree-tos --force-renewal
 sudo certbot certonly --webroot -d analytics.stjj.de --email webmaster@moritzruth.de -w /var/www/_letsencrypt -n --agree-tos --force-renewal
 
 # Uncomment TLS related lines
