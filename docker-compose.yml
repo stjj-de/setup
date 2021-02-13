@@ -1,77 +1,67 @@
 version: "3"
-
 services:
-  frontend:
-    image: "docker.pkg.github.com/stjj-de/frontend/frontend:latest"
+  caddy:
+    image: caddy:2.3.0-alpine
     restart: always
-
     ports:
-      - "127.0.0.1:3000:3000"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./static/Caddyfile:/etc/caddy/Caddyfile
+      - ./data/caddy/data:/data
+      - ./data/caddy/config:/config
 
+  frontend:
+    image: docker.pkg.github.com/stjj-de/frontend/frontend:latest
+    restart: always
     environment:
       SSR_BACKEND_HOST: "backend:8000"
-
     depends_on:
       - backend
 
   backend:
-    image: "docker.pkg.github.com/stjj-de/backend/backend:latest"
+    image: docker.pkg.github.com/stjj-de/backend/backend:latest
     restart: always
-
-    ports:
-      - "127.0.0.1:8000:8000"
-
     environment:
       MARIADB_HOST: mariadb
       MARIADB_PORT: 3306
       MARIADB_USER: backend
       MARIADB_DATABASE: stjj-de
-
     env_file:
-      - "./backend.env"
-
+      - "./config/backend.env"
     volumes:
       - ./data/backend:/app/data
       - /etc/timezone:/etc/timezone
-
     depends_on:
       - mariadb
 
   mariadb:
     image: "mariadb:latest"
     restart: always
-
-    ports:
-      - "127.0.0.1:3306:3306"
-
     environment:
       MYSQL_DATABASE: stjj-de
       MYSQL_USER: backend
-
     env_file:
-      - "./mariadb.env"
-
+      - "./config/mariadb.env"
     volumes:
-      - "./data/db:/var/lib/mysql"
-      
-  ackee:
-    image: electerious/ackee
-    restart: always
-    ports:
-      - "127.0.0.1:4000:3000"
-      
+      - "./data/mariadb:/var/lib/mysql"
+
+  umami:
+    image: ghcr.io/mikecao/umami:mysql-latest
     environment:
-      - WAIT_HOSTS=mongo:27017
-      - ACKEE_MONGODB=mongodb://mongo:27017/ackee
-      
+      DATABASE_URL: postgresql://umami:umami@db:5432/umami
+      DATABASE_TYPE: postgresql
     env_file:
-      - "./ackee.env"
-      
+      - "./config/umami.env"
     depends_on:
-      - mongo
-      
-  mongo:
-    image: mongo
-    restart: always
+      - postgres
+
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: umami
     volumes:
-      - ./data/analytics:/data/db
+      - ./static/umami.postgresql.sql:/docker-entrypoint-initdb.d/schema.postgresql.sql:ro
+      - ./data/postgres:/var/lib/postgresql/data

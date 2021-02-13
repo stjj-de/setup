@@ -1,0 +1,16 @@
+{
+  email webmaster@moritzruth.de
+}
+
+stjj.de {
+  reverse_proxy /api/* /files/* backend:8000
+  reverse_proxy * backend:8000
+}
+
+www.stjj.de {
+  redir * https://stjj.de{uri} permanent
+}
+
+analytics.stjj.de {
+  reverse_proxy * umami:3000
+}
