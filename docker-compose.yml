@@ -15,7 +15,8 @@ services:
     image: docker.pkg.github.com/stjj-de/frontend/frontend:latest
     restart: always
     environment:
-      SSR_BACKEND_HOST: "backend:8000"
+      SSR_BACKEND_HOST: backend:8000
+      MARIADB_PASSWORD: backend
     depends_on:
       - backend
 
@@ -41,6 +42,7 @@ services:
     environment:
       MYSQL_DATABASE: stjj-de
       MYSQL_USER: backend
+      MYSQL_PASSWORD: backend
     env_file:
       - "./config/mariadb.env"
     volumes:
