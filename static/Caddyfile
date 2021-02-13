@@ -3,8 +3,9 @@
 }
 
 stjj.de {
+  reverse_proxy /api/* backend:8000
+  reverse_proxy /files/* backend:8000
   reverse_proxy * frontend:3000
-  reverse_proxy /api/* /files/* backend:8000
 }
 
 www.stjj.de {
