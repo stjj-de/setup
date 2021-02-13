@@ -43,6 +43,8 @@ services:
       MYSQL_DATABASE: stjj-de
       MYSQL_USER: backend
       MYSQL_PASSWORD: backend
+    ports:
+      - "127.0.0.1:3306"
     env_file:
       - "./config/mariadb.env"
     volumes:
