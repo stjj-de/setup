@@ -16,7 +16,6 @@ services:
     restart: always
     environment:
       SSR_BACKEND_HOST: backend:8000
-      MARIADB_PASSWORD: backend
     depends_on:
       - backend
 
@@ -28,6 +27,7 @@ services:
       MARIADB_PORT: 3306
       MARIADB_USER: backend
       MARIADB_DATABASE: stjj-de
+      MARIADB_PASSWORD: backend
     env_file:
       - "./config/backend.env"
     volumes:
