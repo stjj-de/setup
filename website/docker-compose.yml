@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  frontend:
+    image: docker.pkg.github.com/stjj-de/frontend/frontend:latest
+    restart: always
+    environment:
+      SSR_BACKEND_HOST: backend:8000
+    depends_on:
+      - backend
+
+  backend:
+    image: docker.pkg.github.com/stjj-de/backend/backend:latest
+    restart: always
+    environment:
+      MARIADB_HOST: mariadb
+      MARIADB_PORT: 3306
+      MARIADB_USER: backend
+      MARIADB_DATABASE: stjj-de
+      MARIADB_PASSWORD: backend
+    env_file:
+      - ".env"
+    volumes:
+      - ./data/backend:/app/data
+      - /etc/timezone:/etc/timezone
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: "mariadb:latest"
+    restart: always
+    environment:
+      MYSQL_DATABASE: stjj-de
+      MYSQL_USER: backend
+      MYSQL_PASSWORD: backend
+    ports:
+      - "127.0.0.1:3306:3306"
+    env_file:
+      - ".env"
+    volumes:
+      - "./data/mariadb:/var/lib/mysql"
+
+networks:
+  caddy:
+    external: true

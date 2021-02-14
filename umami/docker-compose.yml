@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  umami:
+    image: ghcr.io/mikecao/umami:postgresql-latest
+    restart: always
+    networks:
+      - default
+      - caddy
+    environment:
+      DATABASE_URL: postgresql://umami:umami@postgres:5432/umami
+    env_file:
+      - "./.env"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: umami
+    volumes:
+      - ./static/schema.postgresql.sql:/docker-entrypoint-initdb.d/schema.postgresql.sql:ro
+      - ./data:/var/lib/postgresql/data
+
+networks:
+  caddy:
+    external: true
