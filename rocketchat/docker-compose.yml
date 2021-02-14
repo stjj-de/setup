@@ -27,7 +27,7 @@ services:
     image: mongo:4.0
     restart: always
     volumes:
-      - ./data:/data/db
+      - ./data/mongo:/data/db
     command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
 
   mongo-init-replica:
