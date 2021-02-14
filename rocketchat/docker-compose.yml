@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  rocketchat:
+    image: rocket.chat
+    restart: always
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          node main.js &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    networks:
+      - default
+      - caddy
+    environment:
+      PORT: 3000
+      ROOT_URL: https://chat.stjj.de
+      MONGO_URL: mongodb://mongo:27017/rocketchat
+      MONGO_OPLOG_URL: mongodb://mongo:27017/local
+      HTTP_FORWARDED_COUNT: 1
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.0
+    restart: always
+    volumes:
+      - ./data:/data/db
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+
+  mongo-init-replica:
+    image: mongo:4.0
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo/rocketchat --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              members: [ { _id: 0, host: 'localhost:27017' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    depends_on:
+      - mongo
+
+networks:
+  caddy:
+    external: true
