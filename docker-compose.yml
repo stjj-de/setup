@@ -51,10 +51,9 @@ services:
       - "./data/mariadb:/var/lib/mysql"
 
   umami:
-    image: ghcr.io/mikecao/umami:mysql-latest
+    image: ghcr.io/mikecao/umami:postgresql-latest
     environment:
       DATABASE_URL: postgresql://umami:umami@db:5432/umami
-      DATABASE_TYPE: postgresql
     env_file:
       - "./config/umami.env"
     depends_on:
