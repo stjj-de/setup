@@ -52,6 +52,7 @@ services:
 
   umami:
     image: ghcr.io/mikecao/umami:postgresql-latest
+    restart: always
     environment:
       DATABASE_URL: postgresql://umami:umami@postgres:5432/umami
     env_file:
@@ -61,6 +62,7 @@ services:
 
   postgres:
     image: postgres:12-alpine
+    restart: always
     environment:
       POSTGRES_DB: umami
       POSTGRES_USER: umami
