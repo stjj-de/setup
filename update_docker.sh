@@ -13,6 +13,12 @@
 )
 
 (
+  cd rocketchat || exit
+  docker-compose pull
+  docker-compose up -d
+)
+
+(
   cd caddy || exit
   docker-compose pull
   docker-compose restart
