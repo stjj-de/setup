@@ -47,13 +47,8 @@ services:
       - mongo
 
   smtp:
-    image: namshi/smtp
-    environment:
-      SMARTHOST_ADDRESS: chat.stjj.de
-      SMARTHOST_PORT: 587
-      SMARTHOST_USER: rocketchat
-      SMARTHOST_PASSWORD: rocketchat
-      SMARTHOST_ALIASES: chat.stjj.de
+    image: bytemark/smtp
+    restart: always
 
 networks:
   caddy:
