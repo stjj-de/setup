@@ -53,7 +53,7 @@ services:
   umami:
     image: ghcr.io/mikecao/umami:postgresql-latest
     environment:
-      DATABASE_URL: postgresql://umami:umami@db:5432/umami
+      DATABASE_URL: postgresql://umami:umami@postgres:5432/umami
     env_file:
       - "./config/umami.env"
     depends_on:
