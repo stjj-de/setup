@@ -21,31 +21,10 @@ services:
       caddy:
         aliases:
           - website_strapi
-    environment:
-      MYSQL_HOST: mariadb
-      MYSQL_PORT: 3306
-      MYSQL_USERNAME: strapi
-      MYSQL_DATABASE: strapi
-    env_file:
-      - ".env"
     volumes:
+      - ./data/data.db:/app/data.db
       - ./data/uploads:/app/public/uploads
       - /etc/timezone:/etc/timezone
-    depends_on:
-      - mariadb
-
-  mariadb:
-    image: "mariadb:latest"
-    restart: always
-    environment:
-      MYSQL_DATABASE: strapi
-      MYSQL_USER: strapi
-    # ports:
-      # - "127.0.0.1:3306:3306"
-    env_file:
-      - ".env"
-    volumes:
-      - "./data/mariadb:/var/lib/mysql"
 
 networks:
   caddy:
