@@ -11,7 +11,7 @@ stjj.de {
 new.stjj.de {
   reverse_proxy /graphql/* website_strapi:8000
   reverse_proxy /uploads/* website_strapi:8000
-  reverse_proxy * website_frontend:3000
+  reverse_proxy * website2_frontend:3000
 }
 
 www.stjj.de {
