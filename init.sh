@@ -26,4 +26,10 @@ sudo chmod +x /usr/local/bin/docker-compose
   docker-compose up -d
 )
 
+(
+  cd website-v2
+  mkdir data
+  touch data.db
+)
+
 ./update_docker.sh

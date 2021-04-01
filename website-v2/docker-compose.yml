@@ -21,6 +21,8 @@ services:
       caddy:
         aliases:
           - website_strapi
+    env_file:
+      - ".env"
     volumes:
       - ./data/data.db:/app/data.db
       - ./data/uploads:/app/public/uploads
