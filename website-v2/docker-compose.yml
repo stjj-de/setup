@@ -24,7 +24,7 @@ services:
     environment:
       MYSQL_HOST: mariadb
       MYSQL_PORT: 3306
-      MYSQL_USER: strapi
+      MYSQL_USERNAME: strapi
       MYSQL_DATABASE: strapi
     env_file:
       - ".env"
