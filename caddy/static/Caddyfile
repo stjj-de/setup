@@ -19,3 +19,7 @@ analytics.stjj.de {
 chat.stjj.de {
   reverse_proxy * rocketchat:3000
 }
+
+youtube.stjj.de {
+  redir https://www.youtube.com/channel/UCQwCsxAkFg5TrFTv8bz1n1w/featured
+}
