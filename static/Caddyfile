@@ -2,16 +2,6 @@
   email webmaster@moritzruth.de
 }
 
-stjj.de {
-  reverse_proxy /api/* backend:8000
-  reverse_proxy /files/* backend:8000
-  reverse_proxy * frontend:3000
-}
-
-www.stjj.de {
-  redir * https://stjj.de{uri} permanent
-}
-
-analytics.stjj.de {
-  reverse_proxy * umami:3000
+noir.stjj.de {
+  reverse_proxy strapi:1337
 }

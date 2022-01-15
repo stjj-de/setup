@@ -1,30 +1,28 @@
 # Server Setup
 
 - Clone this repository
-```shell script
+```bash
 git clone https://github.com/stjj-de/setup.git website
 cd website
 ```
 
-- Create `mariadb.env`, `backend.env` and `umami.env` from their corresponding
-example files (`mariadb.env_example`, ...) and provide values
-```shell script
+- Create `strapi.env`
+```bash
 cd config
 
-cp mariadb.env_example mariadb.env
-cp backend.env_example backend.env
-cp umami.env_example umami.env
+cp strapi.env_example strapi.env
+nano strapi.env
 ```
 
-- Login to the Github Docker Registry.
-`~/.github_token` should be a file containing your GitHub token.
-Replace `USERNAME` with your GitHub username.
-```
-cat ~/.github_token | docker login https://docker.pkg.github.com -u USERNAME --password-stdin
-```
-
-- Run `init.sh`
-```shell script
+- Run `init.sh` (Installs docker + docker-compose and starts containers)
+```bash
 cd ..
 ./init.sh
+```
+
+## Updating containers
+
+```bash
+cd ..
+./update_docker.sh
 ```

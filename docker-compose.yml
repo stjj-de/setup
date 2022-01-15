@@ -1,7 +1,7 @@
-version: "3"
+version: "3.8"
 services:
   caddy:
-    image: caddy:2.3.0-alpine
+    image: caddy:2.4.6-alpine
     restart: always
     ports:
       - "80:80"
@@ -10,53 +10,25 @@ services:
       - ./static/Caddyfile:/etc/caddy/Caddyfile
       - ./data/caddy/data:/data
       - ./data/caddy/config:/config
-
-  frontend:
-    image: docker.pkg.github.com/stjj-de/frontend/frontend:latest
-    restart: always
-    environment:
-      SSR_BACKEND_HOST: backend:8000
     depends_on:
-      - backend
+      - strapi
 
-  backend:
-    image: docker.pkg.github.com/stjj-de/backend/backend:latest
+  strapi:
+    build: https://github.com/stjj-de/backend.git
     restart: always
     environment:
-      MARIADB_HOST: mariadb
-      MARIADB_PORT: 3306
-      MARIADB_USER: backend
-      MARIADB_DATABASE: stjj-de
-      MARIADB_PASSWORD: backend
+      HOST: 0.0.0.0
+      PORT: 1337
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi
     env_file:
-      - "./config/backend.env"
+      - "./config/strapi.env"
     volumes:
-      - ./data/backend:/app/data
+      - ./data/uploads:/app/public/uploads
       - /etc/timezone:/etc/timezone
-    depends_on:
-      - mariadb
-
-  mariadb:
-    image: "mariadb:latest"
-    restart: always
-    environment:
-      MYSQL_DATABASE: stjj-de
-      MYSQL_USER: backend
-      MYSQL_PASSWORD: backend
-    ports:
-      - "127.0.0.1:3306:3306"
-    env_file:
-      - "./config/mariadb.env"
-    volumes:
-      - "./data/mariadb:/var/lib/mysql"
-
-  umami:
-    image: ghcr.io/mikecao/umami:postgresql-latest
-    restart: always
-    environment:
-      DATABASE_URL: postgresql://umami:umami@postgres:5432/umami
-    env_file:
-      - "./config/umami.env"
     depends_on:
       - postgres
 
@@ -64,9 +36,8 @@ services:
     image: postgres:12-alpine
     restart: always
     environment:
-      POSTGRES_DB: umami
-      POSTGRES_USER: umami
-      POSTGRES_PASSWORD: umami
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
     volumes:
-      - ./static/umami.postgresql.sql:/docker-entrypoint-initdb.d/schema.postgresql.sql:ro
       - ./data/postgres:/var/lib/postgresql/data
