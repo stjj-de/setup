@@ -14,7 +14,7 @@ services:
       - strapi
 
   strapi:
-    build: https://github.com/stjj-de/backend.git
+    image: ghcr.io/stjj-de/backend:latest
     restart: always
     environment:
       HOST: 0.0.0.0
