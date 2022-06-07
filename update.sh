@@ -2,7 +2,7 @@
 
 (
   cd frontend
-  git clone https://github.com/stjj-de/frontend.git
+  git pull
 )
 
 docker compose pull
