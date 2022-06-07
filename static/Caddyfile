@@ -4,13 +4,15 @@
 
 stone.stjj.de {
   reverse_proxy keystone:8000
+
+  header Access-Control-Allow-Origin https://test.stjj.de
 }
 
 test.stjj.de {
-  root * ./frontend
+  root * /frontend
 
   file_server {
-    hide ./frontend/.git
+    hide /frontend/.git
   }
 
   try_files {path} /
