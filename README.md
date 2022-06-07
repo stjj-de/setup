@@ -13,23 +13,17 @@ cd website
 cat ~/.github_token | docker login ghcr.io -u USERNAME --password-stdin
 ```
 
-- Create `strapi.env`
+- Create `keystone.env`
 ```bash
 cd config
 
-cp strapi.env_example strapi.env
-nano strapi.env
+cp keystone.env_example keystone.env
+nano keystone.env
 ```
 
-- Run `init.sh` (Installs docker + docker-compose and starts containers)
-```bash
-cd ..
-./init.sh
-```
+- [Install docker](https://docs.docker.com/engine/install/#server)
 
-## Updating containers
-
+## Update
 ```bash
-cd ..
-./update_docker.sh
+./update.sh
 ```

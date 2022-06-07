@@ -2,6 +2,37 @@
   email webmaster@moritzruth.de
 }
 
-noir.stjj.de {
-  reverse_proxy strapi:1337
+stone.stjj.de {
+  reverse_proxy keystone:8000
+}
+
+test.stjj.de {
+  root * ./frontend
+
+  file_server {
+    hide ./frontend/.git
+  }
+
+  try_files {path} /
+
+  route {
+    header /assets/* Cache-Control public, max-age=2592000, immutable
+  }
+
+  header {
+  	# disable FLoC tracking
+  	Permissions-Policy interest-cohort=()
+
+  	# enable HSTS
+  	Strict-Transport-Security max-age=31536000;
+
+  	# disable clients from sniffing the media type
+  	X-Content-Type-Options nosniff
+
+  	# clickjacking protection
+  	X-Frame-Options DENY
+
+  	# keep referrer data off of HTTP connections
+  	Referrer-Policy no-referrer-when-downgrade
+  }
 }
