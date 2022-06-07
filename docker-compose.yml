@@ -12,8 +12,6 @@ services:
       - ./data/caddy/data:/data
       - ./data/caddy/config:/config
       - ./frontend:/frontend
-    depends_on:
-      - keystone
 
   keystone:
     image: ghcr.io/stjj-de/backend:latest
