@@ -19,5 +19,5 @@ services:
     env_file:
       - "./config/keystone.env"
     volumes:
-      - ./data:/app/data
+      - ./data/keystone:/app/data
       - /etc/timezone:/etc/timezone
