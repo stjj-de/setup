@@ -6,4 +6,5 @@
 )
 
 docker compose pull
-docker compose up -d
+docker compose up -d --force-recreate
+docker compose restart caddy
