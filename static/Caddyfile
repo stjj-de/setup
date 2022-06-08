@@ -1,42 +1,50 @@
 {
-  email webmaster@moritzruth.de
+    email webmaster@moritzruth.de
 }
 
 stone.stjj.de {
-  reverse_proxy keystone:8000
+    reverse_proxy keystone:8000
 }
 
 test.stjj.de {
-  reverse_proxy /api/* keystone:8000
-  reverse_proxy /files/* keystone:8000
-  reverse_proxy /images/* keystone:8000
+    handle /api/* {
+        reverse_proxy keystone:8000
+    }
 
-  root * /frontend
+    handle /files/* {
+        reverse_proxy keystone:8000
+    }
 
-  file_server {
-    hide /frontend/.git
-  }
+    handle /images/* {
+        reverse_proxy keystone:8000
+    }
 
-  try_files {path} /
+    handle {
+        root * /frontend
 
-  route {
+        file_server {
+            hide /frontend/.git
+        }
+
+        try_files {path} /
+    }
+
     header /assets/* Cache-Control public, max-age=2592000, immutable
-  }
 
-  header {
-  	# disable FLoC tracking
-  	Permissions-Policy interest-cohort=()
+    header {
+  	    # disable FLoC tracking
+  	    Permissions-Policy interest-cohort=()
 
-  	# enable HSTS
-  	Strict-Transport-Security max-age=31536000;
+  	    # enable HSTS
+  	    Strict-Transport-Security max-age=31536000;
 
-  	# disable clients from sniffing the media type
-  	X-Content-Type-Options nosniff
+  	    # disable clients from sniffing the media type
+  	    X-Content-Type-Options nosniff
 
-  	# clickjacking protection
-  	X-Frame-Options DENY
+  	    # clickjacking protection
+  	    X-Frame-Options DENY
 
-  	# keep referrer data off of HTTP connections
-  	Referrer-Policy no-referrer-when-downgrade
+  	    # keep referrer data off of HTTP connections
+  	    Referrer-Policy no-referrer-when-downgrade
   }
 }
