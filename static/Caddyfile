@@ -4,11 +4,13 @@
 
 stone.stjj.de {
   reverse_proxy keystone:8000
-
-  header Access-Control-Allow-Origin https://test.stjj.de
 }
 
 test.stjj.de {
+  reverse_proxy /api/* keystone:8000
+  reverse_proxy /files/* keystone:8000
+  reverse_proxy /images/* keystone:8000
+
   root * /frontend
 
   file_server {
