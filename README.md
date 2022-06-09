@@ -14,6 +14,14 @@ cp keystone.env_example keystone.env
 nano keystone.env
 ```
 
+- Create `umami.env`
+```bash
+cd config
+
+cp umami.env_example umami.env
+nano umami.env
+```
+
 - [Install docker](https://docs.docker.com/engine/install/#server)
 
 ## Update

@@ -21,3 +21,28 @@ services:
     volumes:
       - ./data/keystone:/app/data
       - /etc/timezone:/etc/timezone
+
+  umami:
+    image: ghcr.io/mikecao/umami:mysql-latest
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: mysql://umami:umami@umami_db:3306/umami
+      DATABASE_TYPE: mysql
+    env_file:
+      - "./config/umami.env"
+    depends_on:
+      - umami_db
+
+  umami_db:
+    image: mariadb:10.8.3
+    restart: unless-stopped
+    environment:
+      MARIADB_USER: umami
+      MARIADB_PASSWORD: umami
+      MARIADB_DATABASE: umami
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes # only accessible from localhost anyway
+
+    volumes:
+      - ./static/umami-schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - ./data/umami:/var/lib/postgresql/data
+

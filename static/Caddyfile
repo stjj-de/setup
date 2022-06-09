@@ -6,6 +6,14 @@ stone.stjj.de {
     reverse_proxy keystone:8000
 }
 
+stats.stjj.de {
+    reverse_proxy umami:8000
+}
+
+# www.stjj.de {
+#     redir https://stjj.de{uri}
+# }
+
 test.stjj.de {
     handle /api/* {
         reverse_proxy keystone:8000
