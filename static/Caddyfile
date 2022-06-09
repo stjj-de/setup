@@ -7,7 +7,7 @@ stone.stjj.de {
 }
 
 stats.stjj.de {
-    reverse_proxy umami:8000
+    reverse_proxy umami:3000
 }
 
 # www.stjj.de {
