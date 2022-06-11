@@ -2,19 +2,37 @@
     email webmaster@moritzruth.de
 }
 
+(common) {
+    log {
+        output discard # disables all access logs
+    }
+}
+
 stone.stjj.de {
+    import common
+
     reverse_proxy keystone:8000
 }
 
 stats.stjj.de {
+    import common
+
     reverse_proxy umami:3000
 }
 
-# www.stjj.de {
-#     redir https://stjj.de{uri}
-# }
+www.stjj.de {
+    import common
+    redir https://stjj.de{uri}
+}
 
-test.stjj.de {
+youtube.stjj.de {
+    import common
+    redir https://www.youtube.com/channel/UCQwCsxAkFg5TrFTv8bz1n1w/featured
+}
+
+stjj.de {
+    import common
+
     handle /api/* {
         reverse_proxy keystone:8000
     }
@@ -54,5 +72,5 @@ test.stjj.de {
 
   	    # keep referrer data off of HTTP connections
   	    Referrer-Policy no-referrer-when-downgrade
-  }
+    }
 }
